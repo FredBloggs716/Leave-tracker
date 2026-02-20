@@ -76,10 +76,15 @@ LeaveApp.Dashboard = (function () {
         });
         var empCount = Object.keys(uniqueEmps).length;
 
+        var sickDays = filtered
+            .filter(function (r) { return r.type === 'Sick'; })
+            .reduce(function (s, r) { return s + r.days; }, 0);
+
         el.innerHTML =
             statCard('Off Today', offToday, 'Currently on leave') +
             statCard('Next 7 Days', upcoming, 'Upcoming leave') +
             statCard('Total Days', totalDays, 'Across current leave years') +
+            statCard('Sick Days', sickDays, 'Total sick days taken') +
             statCard('Employees', empCount, 'Have taken leave');
     }
 
