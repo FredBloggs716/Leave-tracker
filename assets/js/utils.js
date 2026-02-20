@@ -13,7 +13,7 @@ LeaveApp.Utils = (function () {
             if (parts[2].length === 4) {
                 if (a > 12) return new Date(c, b - 1, a); // DD/MM/YYYY
                 if (b > 12) return new Date(c, a - 1, b); // MM/DD/YYYY
-                return new Date(c, b - 1, a); // Assume DD/MM/YYYY (UK)
+                return new Date(c, a - 1, b); // Assume MM/DD/YYYY (Google Sheets format)
             }
         }
         var d = new Date(str);

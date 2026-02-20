@@ -124,7 +124,14 @@ LeaveApp.Data = (function () {
                 return r.startDate && r.endDate && r.employee;
             });
 
-            var rawAllowance = parseCSV(results[1]);
+            // The allowance sheet has an extra column-letter row (,A,B,C,D) as its
+            // first line — strip it so the real header row is used instead.
+            var allowanceText = results[1];
+            var allowanceLines = allowanceText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+            if (allowanceLines.length > 0 && /^,?[A-Z](,[A-Z])*$/.test(allowanceLines[0].trim())) {
+                allowanceText = allowanceLines.slice(1).join('\n');
+            }
+            var rawAllowance = parseCSV(allowanceText);
             _allowanceData = rawAllowance.map(transformAllowance).filter(function (a) {
                 return a.employee;
             });
